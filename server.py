@@ -17,7 +17,7 @@ def login():
     user = crud.get_user_by_username(username)
 
     if user:
-        session['user_id'] = user.user_id
+        session['user'] = user.user_id
         session['username'] = user.username
         return redirect('/landingpage')
     flash('Username invalid. Please try again')
@@ -25,7 +25,10 @@ def login():
 
 @app.route('/landingpage')
 def show_landing_page():
-    return render_template('landingpage.html')
+    if session.get('user'):
+        return render_template('landingpage.html')
+    flash('You must log in before viewing this page.')
+    return redirect('/')
 
 if __name__ == "__main__":
     connect_to_db(app)
