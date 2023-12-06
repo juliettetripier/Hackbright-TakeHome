@@ -2,6 +2,16 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+class User(db.Model):
+    """A user."""
+
+    __tablename__ = "users"
+
+    user_id = db.Column(db.Integer,
+        autoincrement=True,
+        primary_key=True)
+    username = db.Column(db.String, unique=True)
+
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///melons", echo=True):
