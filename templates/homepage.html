@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Melon Reservation Scheduler{% endblock %}
+
+{% block body %}
+
+<h1>Melon Reservation Scheduler</h1>
+
+<p>Welcome to the Melon Tasting Reservation Scheduler!</p>
+
+<p>Please log in to book melon tasting appointments and to view your reservations.</p>
+
+<form action="/login" method="POST">
+    <h3>Log In</h3>
+    <label for="username">Username</label>
+    <input type="text" name="username">
+    <button type="submit">Log In</button>
+</form>
+
+{% endblock %}

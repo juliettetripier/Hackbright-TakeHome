@@ -7,7 +7,7 @@ app.secret_key = "placeholder"
 
 @app.route('/')
 def show_homepage():
-    pass
+    return render_template('homepage.html')
 
 
 
