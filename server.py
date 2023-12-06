@@ -30,6 +30,15 @@ def show_landing_page():
     flash('You must log in before viewing this page.')
     return redirect('/')
 
+@app.route('/schedule')
+def show_reservation_search():
+    if session.get('user'):
+        user = crud.get_user_by_id(session.get('user'))
+        return render_template('search-form.html',
+                               user=user)
+    flash('You must log in before viewing this page.')
+    return redirect('/')
+
 if __name__ == "__main__":
     connect_to_db(app)
     app.run(host='0.0.0.0', debug=True)
