@@ -8,3 +8,7 @@ with server.app.app_context():
 
     model.connect_to_db(server.app)
     model.db.create_all()
+
+    user1 = model.User(username="user1")
+    model.db.session.add(user1)
+    model.db.session.commit()
