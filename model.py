@@ -12,6 +12,17 @@ class User(db.Model):
         primary_key=True)
     username = db.Column(db.String, unique=True)
 
+class Reservation(db.Model):
+    """A reservation."""
+
+    __tablename__ = "reservations"
+
+    reservation_id = db.Column(db.Integer,
+                               autoincrement=True,
+                               primary_key=True)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'))
+    datetime = db.Column(db.DateTime)
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///melons", echo=True):
