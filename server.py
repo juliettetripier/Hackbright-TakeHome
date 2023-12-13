@@ -39,6 +39,17 @@ def show_reservation_search():
     flash('You must log in before viewing this page.')
     return redirect('/')
 
+@app.route('/search')
+def show_search_results():
+    date = request.args.get('date-picker')
+    start_time = request.args.get('start-time')
+    end_time = request.args.get('end-time')
+
+    return render_template('search-results.html',
+                           date=date,
+                           start_time=start_time,
+                           end_time=end_time)
+
 if __name__ == "__main__":
     connect_to_db(app)
     app.run(host='0.0.0.0', debug=True)
