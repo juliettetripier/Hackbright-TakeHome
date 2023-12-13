@@ -15,3 +15,8 @@ def get_user_by_id(user_id):
     """Find the user in the DB with the specified user ID."""
 
     return User.query.get(user_id)
+
+def get_booked_appointments_by_date(appt_date):
+    """Find all booked appointments on a given date."""
+
+    return Reservation.query.filter_by(date=appt_date).all()

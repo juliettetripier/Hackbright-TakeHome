@@ -22,7 +22,8 @@ class Reservation(db.Model):
                                primary_key=True)
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.user_id'))
-    datetime = db.Column(db.DateTime)
+    date = db.Column(db.Date)
+    time = db.Column(db.Time)
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///melons", echo=True):
