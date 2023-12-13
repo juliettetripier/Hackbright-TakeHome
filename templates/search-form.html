@@ -8,6 +8,14 @@
 <form action="/search">
     <label for="date-picker">Choose a date:</label>
     <input type="date" id="date-picker" name="date-picker">
+    <p>Optional: Enter a time range to see only available appointments within that range.</p>
+    <label for="start-time">Enter a start time:</label>
+    <input type="time" id="start-time" name="start-time">
+    <br>
+    <label for="end-time">Enter an end time:</label>
+    <input type="time" id="end-time" name="end-time">
+    <br>
+    <button type="submit" id="search-for-appointments">Search for Appointments</button>
 </form>
 
 {% endblock %}
