@@ -2,7 +2,7 @@ from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
 from model import connect_to_db, db
 import crud
-from datetime import datetime
+import datetime
 import time
 
 app = Flask(__name__)
@@ -44,27 +44,52 @@ def show_reservation_search():
 @app.route('/search')
 def show_search_results():
     date = request.args.get('date-picker')
-    print(date)
-    print(type(date))
     start_time = request.args.get('start-time')
-    print(start_time)
     end_time = request.args.get('end-time')
-    print(end_time)
+
+    # Set up converted date and time variables
+    converted_date = None
+    converted_start_time = None
+    converted_end_time = None
 
     # Convert date string to date object
-    converted_date = datetime.strptime(date, '%Y-%m-%d').date()
-    print(converted_date)
+    if date:
+        converted_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
 
     # Convert start and end times, if any, to time object
-    converted_start_time = datetime.strptime(start_time, '%I:%M').time()
-    converted_end_time = datetime.strptime(end_time, '%I:%M').time()
-    print(converted_start_time)
-    print(converted_end_time)
+    if start_time:
+        converted_start_time = datetime.datetime.strptime(start_time, '%H:%M').time()
+    if end_time:
+        converted_end_time = datetime.datetime.strptime(end_time, '%H:%M').time()
 
-    # Generate available appointments for this date
+    # Generate appointment slots for this date
+    time_slots = []
+    if start_time:
+        current_time = datetime.datetime.strptime(start_time, '%H:%M').time()
+    else:
+        current_time = datetime.datetime.strptime('0:00', '%H:%M').time()
+    current_time_datetime = datetime.datetime.combine(converted_date, current_time)
+    if end_time:
+        end = datetime.datetime.strptime(end_time, '%H:%M').time()
+    else:
+        end = datetime.datetime.strptime('23:30', '%H:%M').time()
+    end_datetime = datetime.datetime.combine(converted_date, end)
+
+    while current_time_datetime <= end_datetime:
+        time_slots.append((current_time_datetime).strftime('%H:%M'))
+        current_time_datetime += datetime.timedelta(minutes=30)
+    print(time_slots)
+
+    # Find booked appointments for this date
     booked_appointments = crud.get_booked_appointments_by_date(date)
     print(booked_appointments)
 
+
+
+    # This actually doesn't make sense.
+    # I need to rewrite this so we generate appointment slots
+    # remove the slots which are already booked
+    # and THEN filter out appointments by time
     # Filter out appointments outside of the specified time range, if any
     if start_time or end_time:
         for appointment in booked_appointments:
@@ -76,7 +101,7 @@ def show_search_results():
                 booked_appointments.remove(appointment)
 
     # Calculate available appointments
-    
+
 
     return render_template('search-results.html',
                            date=date,
