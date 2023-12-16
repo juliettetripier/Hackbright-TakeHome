@@ -80,22 +80,31 @@ def show_search_results():
         current_time_datetime += datetime.timedelta(minutes=30)
     print(time_slots)
 
-    # Find booked appointments for this date
+    # Find booked appointments for this date and remove booked timeslots from list of available timeslots
     booked_appointments = crud.get_booked_appointments_by_date(date)
     print(booked_appointments)
-
-    # Calculate available appointments by removing booked appointments from list
+    for appointment in booked_appointments:
+        booked_time = appointment.time
+        booked_time_string = booked_time.strftime('%H:%M')
+        if booked_time_string in time_slots:
+            time_slots.remove(booked_time_string)
+    print(time_slots)
 
     # Convert each time slot in list to AM/PM format
+    converted_time_slots = []
+    for time_slot in time_slots:
+        time_slot_object = datetime.datetime.strptime(time_slot, '%H:%M')
+        converted_time_slot = time_slot_object.strftime('%I:%M %p')
+        converted_time_slots.append(converted_time_slot)
 
-    # Convert date to M/D/YY format
 
 
     return render_template('search-results.html',
                            date=date,
                            start_time=start_time,
                            end_time=end_time,
-                           time_slots=time_slots)
+                           time_slots=time_slots,
+                           converted_time_slots=converted_time_slots)
 
 if __name__ == "__main__":
     connect_to_db(app)

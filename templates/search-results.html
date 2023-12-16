@@ -7,7 +7,7 @@
 
 <h3>Available appointments for {{ date }}:</h3>
 
-{% for time_slot in time_slots %}
+{% for time_slot in converted_time_slots %}
 <button type="button">{{ time_slot }}</button>
 {% endfor %}
 
