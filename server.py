@@ -84,30 +84,18 @@ def show_search_results():
     booked_appointments = crud.get_booked_appointments_by_date(date)
     print(booked_appointments)
 
+    # Calculate available appointments by removing booked appointments from list
 
+    # Convert each time slot in list to AM/PM format
 
-    # This actually doesn't make sense.
-    # I need to rewrite this so we generate appointment slots
-    # remove the slots which are already booked
-    # and THEN filter out appointments by time
-    # Filter out appointments outside of the specified time range, if any
-    if start_time or end_time:
-        for appointment in booked_appointments:
-            # May need to check for start and end times first
-            if appointment.time < converted_start_time:
-                print(appointment)
-                booked_appointments.remove(appointment)
-            if appointment.time > converted_end_time:
-                booked_appointments.remove(appointment)
-
-    # Calculate available appointments
+    # Convert date to M/D/YY format
 
 
     return render_template('search-results.html',
                            date=date,
                            start_time=start_time,
                            end_time=end_time,
-                           booked_appointments=booked_appointments)
+                           time_slots=time_slots)
 
 if __name__ == "__main__":
     connect_to_db(app)

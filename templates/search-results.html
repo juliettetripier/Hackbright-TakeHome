@@ -5,4 +5,12 @@
 
 <h1>Reservation Search Results</h1>
 
+<h3>Available appointments for {{ date }}:</h3>
+
+{% for time_slot in time_slots %}
+<button type="button">{{ time_slot }}</button>
+{% endfor %}
+
+<p>Please click your preferred time slot to book the appointment.</p>
+
 {% endblock %}
