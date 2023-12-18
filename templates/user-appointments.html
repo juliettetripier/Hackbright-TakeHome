@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Your Appointments{% endblock %}
+
+{% block body %}
+
+<h1>Your Appointments</h1>
+
+{% for appointment in appointments %}
+{{ appointment }}
+<br>
+{% endfor %}
+
+<br>
+<a href="/landingpage">Home</a>
+
+{% endblock %}
