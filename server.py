@@ -104,6 +104,15 @@ def book_appointment():
     date = request.args.get('date')
     time_slot = request.args.get('time_slot')
 
+    # Make sure the user doesn't already have an appointment on this date
+    # Convert date from string to date object
+    converted_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+
+    # Convert time slot from time to time object
+    military_time_object = datetime.datetime.strptime(time_slot, '%I:%M %p').time()
+    military_time = military_time_object.strftime('%H:%M')
+    converted_time = datetime.datetime.strptime(military_time, '%H:%M').time()
+    print(converted_time)
 
     return redirect('/user-appointments')
 
