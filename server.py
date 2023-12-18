@@ -56,12 +56,6 @@ def show_search_results():
     if date:
         converted_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
 
-    # Convert start and end times, if any, to time object
-    if start_time:
-        converted_start_time = datetime.datetime.strptime(start_time, '%H:%M').time()
-    if end_time:
-        converted_end_time = datetime.datetime.strptime(end_time, '%H:%M').time()
-
     # Generate appointment slots for this date
     time_slots = []
     if start_time:
