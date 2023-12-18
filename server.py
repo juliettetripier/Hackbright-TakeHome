@@ -127,8 +127,29 @@ def book_appointment():
 
 @app.route('/user-appointments')
 def show_user_appointments():
+    user = session.get('user')
+    appointment_objects = crud.get_booked_appointments_by_user(user)
 
-    return render_template('user-appointments.html')
+    # Break down appointment objects into user-friendly strings
+    appointments = []
+
+    for appointment in appointment_objects:
+        appointment_string = ""
+        time_slot = appointment.time
+        date = appointment.date
+
+        # Convert date to string
+        converted_date = date.strftime('%m-%d-%Y')
+        appointment_string += f'{converted_date} at '
+
+        # Convert time to string
+        converted_time = time_slot.strftime('%I:%M %p')
+        appointment_string += converted_time
+
+        appointments.append(appointment_string)
+
+    return render_template('user-appointments.html',
+                           appointments=appointments)
 
 if __name__ == "__main__":
     connect_to_db(app)
