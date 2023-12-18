@@ -9,8 +9,9 @@
 
 <form id="book-appointment-form" action="/book-appointment">
     {% for time_slot in converted_time_slots %}
-    <button type="submit" value="{{ time_slot }}">{{ time_slot }}</button>
+    <button type="submit" value="{{ time_slot }}" name="time_slot">{{ time_slot }}</button>
     {% endfor %}
+    <input type="hidden" value="{{ date }}" name="date">
 </form>
 
 <p>Please click your preferred time slot to book the appointment.</p>

@@ -47,14 +47,12 @@ def show_search_results():
     start_time = request.args.get('start-time')
     end_time = request.args.get('end-time')
 
-    # Set up converted date and time variables
-    converted_date = None
+    # Set up converted time variables
     converted_start_time = None
     converted_end_time = None
 
     # Convert date string to date object
-    if date:
-        converted_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+    converted_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
 
     # Generate appointment slots for this date
     time_slots = []
@@ -103,6 +101,9 @@ def show_search_results():
 
 @app.route('/book-appointment')
 def book_appointment():
+    date = request.args.get('date')
+    time_slot = request.args.get('time_slot')
+
 
     return redirect('/user-appointments')
 
