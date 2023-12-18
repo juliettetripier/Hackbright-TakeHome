@@ -100,6 +100,18 @@ def show_search_results():
                            time_slots=time_slots,
                            converted_time_slots=converted_time_slots)
 
+
+@app.route('/book-appointment')
+def book_appointment():
+
+    return redirect('/user-appointments')
+
+
+@app.route('/user-appointments')
+def show_user_appointments():
+
+    return render_template('user-appointments.html')
+
 if __name__ == "__main__":
     connect_to_db(app)
     app.run(host='0.0.0.0', debug=True)

@@ -7,9 +7,11 @@
 
 <h3>Available appointments for {{ date }}:</h3>
 
-{% for time_slot in converted_time_slots %}
-<button type="button">{{ time_slot }}</button>
-{% endfor %}
+<form id="book-appointment-form" action="/book-appointment">
+    {% for time_slot in converted_time_slots %}
+    <button type="submit" value="{{ time_slot }}">{{ time_slot }}</button>
+    {% endfor %}
+</form>
 
 <p>Please click your preferred time slot to book the appointment.</p>
 
