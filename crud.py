@@ -21,6 +21,16 @@ def get_booked_appointments_by_date(appt_date):
 
     return Reservation.query.filter_by(date=appt_date).all()
 
+def get_booked_appointments_by_user(user_id):
+    """Find all booked appointments for a given user."""
+
+    return Reservation.query.filter_by(user_id=user_id).all()
+
+def get_booked_appointments_by_user_and_date(user_id, date):
+    """Find all booked appointments for a given user on a given date."""
+
+    return Reservation.query.filter_by(user_id=user_id, date=date).all()
+
 def create_appointment(date, time_slot, user_id):
     """Add an appointment with the specified user, date, and time slot to the DB."""
 
