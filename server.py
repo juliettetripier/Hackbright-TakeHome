@@ -103,16 +103,24 @@ def show_search_results():
 def book_appointment():
     date = request.args.get('date')
     time_slot = request.args.get('time_slot')
+    user = session.get('user')
 
-    # Make sure the user doesn't already have an appointment on this date
     # Convert date from string to date object
     converted_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
 
-    # Convert time slot from time to time object
-    military_time_object = datetime.datetime.strptime(time_slot, '%I:%M %p').time()
-    military_time = military_time_object.strftime('%H:%M')
-    converted_time = datetime.datetime.strptime(military_time, '%H:%M').time()
-    print(converted_time)
+    # Check to make sure user doesn't already have an appointment on this date
+    appointments_on_date = crud.get_booked_appointments_by_user_and_date(user, date)
+    if appointments_on_date:
+        flash('You already have an appointment scheduled for this date. Please choose another date.')
+    else:
+        # Convert time slot from time to time object
+        military_time_object = datetime.datetime.strptime(time_slot, '%I:%M %p').time()
+        military_time = military_time_object.strftime('%H:%M')
+        converted_time = datetime.datetime.strptime(military_time, '%H:%M').time()
+
+        # Add appointment to DB
+        crud.create_appointment(date, time_slot, user)
+        flash('Appointment booked successfully!')
 
     return redirect('/user-appointments')
 

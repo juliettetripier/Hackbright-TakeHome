@@ -31,9 +31,9 @@ def get_booked_appointments_by_user_and_date(user_id, date):
 
     return Reservation.query.filter_by(user_id=user_id, date=date).all()
 
-def create_appointment(date, time_slot, user_id):
+def create_appointment(date, time, user_id):
     """Add an appointment with the specified user, date, and time slot to the DB."""
 
-    new_appointment = Reservation(user_id=user_id, date=date, time_slot=time_slot)
+    new_appointment = Reservation(user_id=user_id, date=date, time=time)
     db.session.add(new_appointment)
     db.session.commit()
